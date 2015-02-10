@@ -1,0 +1,74 @@
+import sys
+import math
+
+def fit( counts, total, prompt ):
+    summ = 0;
+    maxC = 0;
+    
+    total_so_far = 0.0;
+
+    for c in sorted(counts.iterkeys()):
+        total_so_far = total_so_far + counts[c];
+
+        print str(c) + " : " + str(counts[c]),
+        if (total > 0):
+            print " ( " + str("%.2f" % (total_so_far / total)) + "% )"
+        else:
+            print ""
+        maxC = c;
+        summ = summ + math.log(counts[c]);
+       
+    a = 1. + (maxC / summ);
+        
+    print str(prompt) + " : " + str( a )
+    print str(prompt) + " Err : " + str((a - 1) / math.sqrt(maxC))
+
+
+f = open(sys.argv[1]);
+both = False;
+
+if len(sys.argv) > 2:
+    if (sys.argv[2] == "b"):
+        both = True;
+
+print both
+
+deg = dict();
+wei = dict();
+
+nedges = 0.0;
+
+for line in f.readlines():
+    w = line.split(", ");
+    fr = w[0].strip();
+    to = w[1].strip();
+    wt = float(w[2].strip());
+
+    if fr not in deg:
+        deg[fr] = 1;
+    else:
+        deg[fr] = deg[fr] + 1;
+        
+    if wt not in wei:
+        wei[wt] = 1
+    else:
+        wei[wt] = wei[wt] + 1;
+
+    nedges = nedges + 1;
+
+    if both == False:
+        if to not in deg:
+            deg[to] = 1;
+        else:
+            deg[to] = deg[to] + 1;
+
+counts = dict();
+
+for v in deg:
+    if deg[v] not in counts:
+        counts[deg[v]] = 1;
+    else:
+        counts[deg[v]] = counts[deg[v]] + 1;
+
+fit(counts, 0, "Degree Dist");
+fit(wei, nedges, "Weight Dist");

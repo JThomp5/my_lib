@@ -1,0 +1,86 @@
+#include "Wrappers.h"
+#include "../Math/Mathhelp.h"
+
+/**
+ *@double random_double
+ *
+ * Wrapper function for getting a random double value
+ *
+ *@return Random double between 0 and 1 ( inclusive )
+ */
+double random_double ( ) {
+  return ( double ) rand() / RAND_MAX;
+}
+
+double random_double ( double min, double max ) {
+  return ( ( ( double ) rand() / RAND_MAX ) * ( max - min ) ) + min;
+}
+
+int random_int ( int min, int max ) {
+  return ( rand() % ( max - min + 1 ) ) + min;
+}
+
+vector < int > get_random_subset ( const vector < int >& values, int elements ){
+  vector < int > result;
+
+  if ( values.size() < elements ) {
+    for ( int i = 0; i < values.size(); i++ ){
+      result.push_back(values[i]);
+    }
+
+    return result;
+  }
+
+  int total = values.size();
+  unsigned long choices = binomial_coefficient ( values.size(), (unsigned)elements );
+  int chosen = rand() % choices;
+
+  for ( int i = 0; i < values.size(); i++ ){
+    int break_point = (float(elements) / float(total)) * choices;
+    if ( chosen < break_point ){
+      result.push_back(values[i]);
+      choices -= (choices - break_point);
+      --elements;
+    } else {
+      chosen -= break_point;
+      choices -= break_point;
+    }
+
+    --total;
+  }
+
+  return result;
+}
+
+set < int > get_random_subset ( const set < int >& values, int elements ){
+  set < int > result;
+  set < int >::const_iterator it_r;
+
+  if ( values.size() < elements ) {
+    for ( it_r = values.begin(); it_r != values.end(); it_r++ ){
+      result.insert( *it_r );
+    }
+
+    return result;
+  }
+  
+  int total = values.size();
+  unsigned long choices = binomial_coefficient ( values.size(), (unsigned)elements );
+  int chosen = rand() % choices;
+  
+  for ( it_r = values.begin(); it_r != values.end(); it_r++ ){
+    int break_point = ( float(elements) / float(total) ) * choices;
+    if ( chosen < break_point ) {
+      result.insert(*it_r);
+      choices -= ( choices - break_point );
+      --elements;
+    } else {
+      chosen -= break_point;
+      choices -= break_point;
+    }
+
+    --total;
+  }
+  
+  return result;
+}

@@ -1,0 +1,3 @@
+#include "PowerLaw.h"
+
+bool PowerLaw::seeded = false;
