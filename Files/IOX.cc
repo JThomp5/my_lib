@@ -46,6 +46,41 @@ bool fline_tr(ifstream* fin, vector<string>* fields, string delim)
   return true;
 }
 
+bool fline_tr(ifstream* fin, set<string>* fields, string delim)
+{
+  fields->clear();
+  set < string > *tfields = new set < string > ();
+  set<string>::iterator p, q;
+ 
+    string full;
+    getline(*fin, full);
+    
+    if (fin->fail() && fin->eof())
+      return false;
+    
+    char *pt = strtok((char*)(full.c_str()), delim.c_str());
+    while (pt != NULL){
+      tfields->insert(pt);
+      pt = strtok(NULL, delim.c_str());
+    }
+    
+  for (p = tfields->begin(); p != tfields->end(); p++)
+    {
+      while (trim(*p).compare("") == 0 && p != tfields->end())
+      {
+	q = p;
+	tfields->erase(q);
+      }
+      
+      if (p == tfields->end())
+	break;
+      
+      fields->insert(trim(*p));
+    }
+  
+  return true;
+}
+
 /** @fn void split_tr(vector <string>* fields, string delim)
  *
  */

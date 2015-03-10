@@ -6,7 +6,9 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <set>
 
+bool fline_tr(ifstream* fin, set<string>* fields, string delim);
 bool fline_tr(ifstream* fin, vector<string>* fields, string delim);
 bool openFile(ifstream* fin, string filename);
 void openFileHarsh(ifstream* fin, string filename);
