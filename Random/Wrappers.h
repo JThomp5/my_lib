@@ -6,6 +6,7 @@
 #include <set>
 #include <cstdlib>
 #include <cstdio>
+#include <string>
 
 using namespace std;
 
@@ -43,5 +44,6 @@ int random_int ( int min, int max );
 
 vector < int > get_random_subset ( const vector < int >& values, int elements );
 set < int > get_random_subset ( const set < int >& values, int elements );
+set < string > get_random_subset ( const set < string >& values, int elements );
 
 #endif

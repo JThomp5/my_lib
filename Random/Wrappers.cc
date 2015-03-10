@@ -84,3 +84,21 @@ set < int > get_random_subset ( const set < int >& values, int elements ){
   
   return result;
 }
+
+set < string > get_random_subset ( const set < string >& values, int elements ){
+  set < int > chosen;
+  while ( chosen.size() < elements ){
+    chosen.insert ( rand() % values.size() );
+  }
+
+  set < string > result;
+  set < int >::iterator it_c;
+  set < string >::iterator it_s;
+  for ( it_c = chosen.begin(); it_c != chosen.end(); it_c++) {
+    it_s = values.begin();
+    advance ( it_s, *it_c );
+    result.insert ( *it_s );
+  }
+
+  return result;
+}
