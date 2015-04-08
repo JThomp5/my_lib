@@ -20,6 +20,10 @@ class PowerLaw {
   double Sample ( ) {    
     return pow ( ( (mx - mn) * (((double)rand()) / (double)RAND_MAX) + mn ), 1. / (exp + 1.) );
   }
+
+  double getExp ( ) { return exp; }
+  double getMin ( ) { return mn; }
+  double getMax ( ) { return mx; }
  
  private:
   double exp, mn, mx;
