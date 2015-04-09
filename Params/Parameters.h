@@ -96,6 +96,13 @@ class Parameters{
 			  throw "Invalid Parameters";
 		}
 		
+		bool hasFlag ( string flag ) {
+		  if ( ( it_lookup = lookup.find ( flag ) ) != lookup.end() ){
+		    return true;
+		  } 
+		  return false;
+		}
+		
 		/**
 		 * @fn void boolset (bool* var, string tag)
 		 * @param var Pointer to variable to set to parameter
